@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity
 public class Trip implements Validable {
 
@@ -104,7 +105,7 @@ public class Trip implements Validable {
 			res.add("La data non può essere vuota");
 		if (departureTime == null && arrivalTime == null)
 			res.add("La partenza e l'arrivo non possono essere vuoti");
-		if (departureTime != null && arrivalTime != null && departureTime.isAfter(arrivalTime))
+		if (departureTime != null && arrivalTime != null && !arrivalTime.isAfter(departureTime))
 			res.add("La partenza non può essere nel passato");
 		if (capacity < 10)
 			res.add("La capienza minima è di 10 persone");
