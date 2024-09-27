@@ -2,7 +2,9 @@ package com.generation.brianzabus.model.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +47,81 @@ public class Admin
 
 	public List<String> getErrors() 
 	{
+		
+		 List<String> res = new ArrayList<String>();
+				 {
+			  if(!hasValidEmail())
+			 res.add("Invalid email");
+				 }
+		 
+	
+	}
+	private boolean hasValidEmail() {
+		// deve esserci una sola @
+				// username@dominio
+				return hasValidStructure() && hasValidUsername() && hasValidDomain();
+		
+		
+	}
+	
+
+	private boolean hasValidDomain() {
+		String domain = email.split("@")[1];
+	return onlyValidCharacters(domain) && domain.indexOf(".")>0;
+		
+	}
+	
+	
+	private boolean hasValidStructure()
+	{
+		
+	if(email==null || email.isBlank())
+		return false;
+	String[] parts = email.split("@");
+	
+	if(parts.length!=2)
+		return false;
+	if(parts[0].length()==0 || parts[1].length()==0)
+		return false;
+	return true;
+	
+	}
+	
+	private boolean hasValidUsername()
+	{
+		
+		String username = email.split("@")[0];
+		
+		return notANumber (username.charAt(0))
+		
+		&& onlyValidCharacters(username);
+		
+	}
+	
+	
+	
+	private boolean onlyValidCharacters(String s) {
+		String valid ="0123456789ABCDEFGHILMNOPQRSTUVZXYWJKabcdefghilmnopqrstuvzwkjyx.";
+		Set<Character> chars = new HashSet<Character>();
+		for(int i=0;i<valid.length();i++)
+			chars.add(valid.charAt(i));
+		
+		for(int i=0;i<s.length();i++)
+			if(!chars.contains(s.charAt(i)))
+				return false;
+		
+		return true;
+		
+		
+		
+	}
+private boolean notANumber(char f) {
+	return !(f>='0' && f<='9');
+	}
+}
+		
+		
+		/*
 	    List<String> res = new ArrayList<String>();
 
 	    if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".")) {
@@ -62,7 +139,7 @@ public class Admin
 
 	    return res;
 	
-		
+		*/
 		
 		
 		
@@ -80,11 +157,9 @@ public class Admin
 		 * 
 		 * 
 		 * */
-	}
 	
 	
 	
 	
 	
 	
-}
