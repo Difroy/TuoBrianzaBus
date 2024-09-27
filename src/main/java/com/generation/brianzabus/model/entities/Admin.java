@@ -60,7 +60,7 @@ public class Admin
 			if (lastPasswordChange == null)
 				errors.add("Last password change is required");
 			
-		
+		return errors;
 		
 		
 		
