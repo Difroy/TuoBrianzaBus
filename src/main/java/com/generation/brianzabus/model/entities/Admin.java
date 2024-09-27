@@ -43,25 +43,25 @@ public class Admin
 		this.lastPasswordChange = lastPasswordChange;
 	}
 
-	public List<String> getErrors()
+	public List<String> getErrors() 
 	{
-		
-		
-		List<String> errors = new ArrayList<String>();
-		
-		if (email == null || email.isEmpty() || !email.contains("@") || !email.contains("."))
-			errors.add("Email is required");
-		if (email.matches("AZaz09._-!?"))
-			errors.add("Email is not valid");
+	    List<String> res = new ArrayList<String>();
+
+	    if (email == null || email.isEmpty() || !email.contains("@") || !email.contains(".")) {
+	        res.add("Email is required");
+	    }
+	    if (!email.matches("[A-Za-z0-9._-!?]")) {
+	        res.add("Email is not valid");
+	    }
+
+	    if (password == null || password.isEmpty()) {
+	        res.add("Password is required");
+	    }
+	    
+	    
+
+	    return res;
 	
-	
-		if (password == null || password.isEmpty());
-			errors.add("Password is required");
-			if (lastPasswordChange == null)
-				errors.add("Last password change is required");
-			
-		return errors;
-		
 		
 		
 		
