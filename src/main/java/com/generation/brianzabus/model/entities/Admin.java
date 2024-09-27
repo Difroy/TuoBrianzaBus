@@ -128,9 +128,6 @@ public class Admin {
 			
 	}
 	
-	
-	
-
 	private boolean hasValidEmail() {
 		// deve esserci una sola @
 		// username@dominio
