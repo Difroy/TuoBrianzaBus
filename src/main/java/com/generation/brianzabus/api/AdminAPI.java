@@ -23,7 +23,7 @@ public class AdminAPI {
 	@Autowired
 	Session session;
 
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody Admin admin)
 	{
 		Admin found = adminRepo.findByEmailAndPassword(admin.getEmail(), admin.getPassword());
@@ -37,7 +37,7 @@ public class AdminAPI {
 
 	}
 
-	@PostMapping("logout")
+	@PostMapping("/logout")
 	public ResponseEntity<Object> logout()
 	{
 		session.setUser(null);
