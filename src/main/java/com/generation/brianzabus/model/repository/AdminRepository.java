@@ -6,4 +6,6 @@ import com.generation.brianzabus.model.entities.Admin;
 
 public interface AdminRepository extends JpaRepository <Admin, Integer> {
 
+	Admin findByEmailAndPassword(String email, String password);
+
 }
