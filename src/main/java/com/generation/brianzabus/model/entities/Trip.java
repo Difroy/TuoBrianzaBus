@@ -1,13 +1,17 @@
 package com.generation.brianzabus.model.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
-public class Trip {
+public class Trip implements Validable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,6 +90,30 @@ public class Trip {
 	}
 	public void setArrival(String arrival) {
 		this.arrival = arrival;
+	}
+	@Override
+	@JsonIgnore
+	public List<String> getErrors()
+	{
+
+		List<String>res = new ArrayList<String>();
+		
+		if (description == null || description.isBlank())
+			res.add("La descrizione non può essere vuota");
+		if (date == null)
+			res.add("La data non può essere vuota");
+		if (departureTime == null && arrivalTime == null)
+			res.add("La partenza e l'arrivo non possono essere vuoti");
+		if (departureTime != null && arrivalTime != null && departureTime.isAfter(arrivalTime))
+			res.add("La partenza non può essere nel passato");
+		if (capacity < 10)
+			res.add("La capienza minima è di 10 persone");
+		if (cost < 0)
+			res.add("Il costo non può essere negativo");
+		return res;
+		
+		
+		
 	}
 	
 	
