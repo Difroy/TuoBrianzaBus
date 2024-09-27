@@ -12,8 +12,6 @@ import com.generation.brianzabus.Session;
 import com.generation.brianzabus.model.entities.Admin;
 import com.generation.brianzabus.model.repository.AdminRepository;
 
-
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/bb/api/admin")
@@ -21,24 +19,34 @@ public class AdminAPI {
 
 	@Autowired
 	AdminRepository adminRepo;
-	
+
 	@Autowired
 	Session session;
-	
-	
+
 	@PostMapping
-	public ResponseEntity<Object> login (@RequestBody Admin admin )
+	public ResponseEntity<Object> login(@RequestBody Admin admin)
 	{
-		Admin found = adminRepo.findByEmailAndPassword (admin.getEmail(), admin.getPassword());
-		
-		if(found != null)
+		Admin found = adminRepo.findByEmailAndPassword(admin.getEmail(), admin.getPassword());
+
+		if (found != null)
 		{
 			session.setUser(found);
 			return ResponseEntity.ok().build();
-		}else
+		} else
 			return ResponseEntity.status(403).build();
-		
-		
+
+	}
+
+	@PostMapping("logout")
+	public ResponseEntity<Object> logout()
+	{
+		session.setUser(null);
+		return ResponseEntity.ok().build();
 	}
 	
+	
+	
+	
+	
+
 }
